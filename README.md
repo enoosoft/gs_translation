@@ -19,7 +19,7 @@ git clone "https://github.com/enoosoft/gs_translation.git"
 
 [샘플시트](https://docs.google.com/spreadsheets/d/1bnsfTv6ORtWLUEvkgmnvey6qNi_pGdpFapTQQd5UZss/edit#gid=0) 를 복사하여 만들면 됩니다. Google 시트를 사용하면 간단한 수식으로 필드를 번역할 수 있습니다. `=GOOGLETRANSLATE(B4,en,ko)` 필드 `B4`의 문구를 영어(`en`)에서 한국어(`ko`)로 번역할 수 있습니다. 
 
-그런 다음 구글시트 ID와 프로젝트 폴더명을 `main.dart` 파일의 `projectMap` 등을 아래와 같이 수정을 해준다
+그런 다음 구글시트 ID와 프로젝트 폴더명을 `main.dart` 파일의 `projectMap` 등을 아래와 같이 수정을 해줍니다
 
 ```dart
 //프로젝트별 GOOGLE 시트 번역 문서 ID
@@ -80,7 +80,7 @@ Text('Input text here'.tr)
 `GetX internationalization`에 대해서는 [여기](https://pub.dev/packages/get#internationalization)에 자세한 내용이 있습니다.
 
 
-이 프로그램은 아래 블로그를 보고 번역/개선하여 만든 프로그램입니다.  
+이 프로그램은 아래 블로그를 참조하여 개선하여 만든 프로그램입니다.  
 
 ### 원저자 및 출처  
 [Jeff McMorris](https://jeffmcmorris.medium.com/)  
