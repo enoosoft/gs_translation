@@ -38,7 +38,7 @@ String thisLocalPath = 'C:\\Sync\\Works\\gs_translation\\lib';
 ```
 
 
-마지막으로 번역프로그램 루트 폴더에서 아래와 같이 커맨드롤 수행합니다.
+마지막으로 번역프로그램 루트 폴더에서 아래와 같이 커맨드를 수행합니다.
 ```
 dart lib/main.dart
 ```
