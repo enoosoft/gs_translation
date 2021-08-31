@@ -1,8 +1,8 @@
 
 # GetX Google Sheets 번역코드 생성기
 
-`GetX` 패키지의 `.tr` 번역을 사용할때 일일이 언어 코드별로 `localization.g.dart` 코드를 작성해야 돼기 때문에 매우 불편하고 지루합니다.
-이 프로그램으은 `Google sheet` 에 번역 데이터 시트를 통해 `GetX` 의 `localization.g.dart` 소스코드를 자동으로 생성할 수 있는 프로그램입니다.
+`GetX` 패키지의 `.tr` 번역을 사용할때 일일이 언어 코드별로 `localization.g.dart` 코드를 작성해야되기 때문에 매우 불편하고 지루합니다.
+이 프로그램은 `Google sheet` 의 번역 데이터 시트를 통해 `GetX` 의 `localization.g.dart` 소스코드를 자동으로 생성해주는 프로그램입니다.
 
 
 ## How this program works
