@@ -74,7 +74,7 @@ class Localization extends Translations {
 그리고 `GetX` 프로젝트에서 아래 방법으로 번역을 사용하면 됩니다.
 
 ```dart
-Text('settings.updateProfile'.tr)
+Text('Input text here'.tr)
 ```
 
 `GetX internationalization`에 대해서는 [여기](https://pub.dev/packages/get#internationalization)에 자세한 내용이 있습니다.
