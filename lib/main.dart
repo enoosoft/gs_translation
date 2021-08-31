@@ -11,9 +11,8 @@ void main() {
 //프로젝트별 GOOGLE 시트 번역 문서 ID
 //문서는 "링크를 가진사람은 모두 엑세스"될 수있도록 "공유" 돼 있어야 한다.
 final projectMap = {
-  "post": "1aMM-Q__xaMFOO5h1AnTUEOHxo1TKfCJMwmhHTxLBJM0",
-  "rplc": "16034CeZ7qLUt72SSOpd2gkZI2N4zKy8X8KU-AnLCXzA",
-  'astc': '1vjtl5eg7e0cLUZHKjBN7XbXIhT_12PQdUCQzbfojc7I',
+  'astc': '1bnsfTv6ORtWLUEvkgmnvey6qNi_pGdpFapTQQd5UZss',
+  'any-other-project': '1bnsfTvany-other-projectTQQd5UZss'
 };
 
 //번역 생성할 프로젝트 폴더명
