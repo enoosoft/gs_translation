@@ -8,18 +8,22 @@ void main() {
   updateLocalizationFile();
 }
 
+//프로젝트별 GOOGLE 시트 번역 문서 ID
+//문서는 "링크를 가진사람은 모두 엑세스"될 수있도록 "공유" 돼 있어야 한다.
 final projectMap = {
-  "post": "1aMM-Q__xaMFOO5h1AnTUEOHxo1TKfCJMwmhHTxLBJM0",
-  "rplc": "16034CeZ7qLUt72SSOpd2gkZI2N4zKy8X8KU-AnLCXzA",
+  'astc': '1bnsfTv6ORtWLUEvkgmnvey6qNi_pGdpFapTQQd5UZss',
+  'any-other-project': '1bnsfTvany-other-projectTQQd5UZss'
 };
 
-final PROJECT_ID = 'rplc';
+//번역 생성할 프로젝트 폴더명
+final PROJECT_ID = 'astc';
+//프로젝트별 localization.g.dart 파일 위치
+String updateProjectLocalPath = 'C:\\Sync\\Works\\$PROJECT_ID\\lib\\helpers';
+//번역프로그램 lib 위치
+String thisLocalPath = 'C:\\Sync\\Works\\gs_translation\\lib';
 
 Future updateLocalizationFile() async {
-  //the document id for your google sheet
-  String? documentId = projectMap[PROJECT_ID]; //
-  String updateProjectLocalPath = 'C:\\Sync\\Works\\$PROJECT_ID\\lib\\helpers';
-  String thisLocalPath = 'C:\\Sync\\Works\\gs_translation\\lib';
+  String? documentId = projectMap[PROJECT_ID];
   //the sheetid of your google sheet
   String sheetId = "0";
 
@@ -33,20 +37,17 @@ class Localization extends Translations {
     """;
 
   try {
-    //https://docs.google.com/spreadsheets/d/1aMM-Q__xaMFOO5h1AnTUEOHxo1TKfCJMwmhHTxLBJM0/edit?usp=sharing
     final url =
         'https://docs.google.com/spreadsheets/d/$documentId/export?format=csv&id=$documentId&gid=$sheetId';
 
     stdout.writeln('');
     stdout.writeln('---------------------------------------');
-    stdout.writeln('Downloading Google sheet url "$url" ...');
+    stdout.writeln('Downloading Google sheet from url("$url") ...');
     stdout.writeln('---------------------------------------');
 
     //--FROM GOOGLE SHEET------------------------------------------
     var response = await http
         .get(Uri.parse(url), headers: {'accept': 'text/csv;charset=UTF-8'});
-
-    //print('Google sheet csv:\n ${response.body}');
 
     final bytes = response.bodyBytes.toList();
     final csv = Stream<List<int>>.fromIterable([bytes]);
@@ -58,6 +59,7 @@ class Localization extends Translations {
         ))
         .toList();
     print(fields.length);
+
     //--FROM LOCALFILE------------------------------------------
     // final input =
     //     new File('C:/Users/ENOO/Downloads/post_translation - Sheet1.csv')

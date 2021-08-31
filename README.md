@@ -1,33 +1,88 @@
 
-## GetX Google Sheets Translation Code Generator
+# GetX Google Sheets 번역코드 생성기
 
-When handling localization for my app I was using the excellent [https://pub.dev/packages/flutter_sheet_localization](https://pub.dev/packages/flutter_sheet_localization) package. I have also been using the GetX package. GetX now has their own translation code options so I wanted the benefits of storing my translations in google sheets but also wanted the ability to have the code I would need for GetX generated automatically since you must write a lot of tedious code to translate your app.
+`GetX` 패키지의 `.tr` 번역을 사용할때 일일이 언어 코드별로 `localization.g.dart` 코드를 작성해야 돼기 때문에 매우 불편하고 지루합니다.
+이 프로그램으은 `Google sheet` 에 번역 데이터 시트를 통해 `GetX` 의 `localization.g.dart` 소스코드를 자동으로 생성할 수 있는 프로그램입니다.
 
-I created a code generator that will do this.
 
-So let me explain how it works. You need to create a translation for your app in google sheets.
+## How this program works
 
-![](https://cdn-images-1.medium.com/max/2000/0*np0ZcUgEyUHVBTv1)
 
-You can copy my [sheet](https://docs.google.com/spreadsheets/d/1oS7iJ6ocrZBA53SxRfKF0CG9HAaXeKtzvsTBhgG4Zzk/edit#gid=0) as a starting point for your own app. The cool thing about using a google sheet is you can have google translate a field with a simple google formula: =GOOGLETRANSLATE(B4,en,fr) This says translate the phrase in field B4 from english to french. Next you can edit the main.dart file in the [project](https://github.com/delay/getx_google_sheets_translation_code_generator) I listed earlier and edit these two lines.
+먼저 변환프로젝트를 로컬로 가져옵니다.
+```
+git clone "https://github.com/enoosoft/gs_translation.git"
+```
 
-    //the document id for your google sheet  
-    String documentId = "1oS7iJ6ocrZBA53SxRfKF0CG9HAaXeKtzvsTBhgG4Zzk";  //the sheet id of your google sheet  
-    String sheetId = "0";
+그리고 아래와 같이 구글 번역 시트 문서를 만듭니다.
 
-The next step is to go to the command line and change to the lib/ directory. Then type:
+![](./doc/images/gstr_sample.png)
 
-    dart main.dart
+[샘플시트](https://docs.google.com/spreadsheets/d/1bnsfTv6ORtWLUEvkgmnvey6qNi_pGdpFapTQQd5UZss/edit#gid=0) 를 복사하여 만들면 됩니다. Google 시트를 사용하면 간단한 수식으로 필드를 번역할 수 있습니다. `=GOOGLETRANSLATE(B4,en,ko)` 필드 `B4`의 문구를 영어(`en`)에서 한국어(`ko`)로 번역할 수 있습니다. 
 
-This will create a localization.g.dart file with your generated code that looks like this.
+그런 다음 구글시트 ID와 프로젝트 폴더명을 `main.dart` 파일의 `projectMap` 등을 아래와 같이 수정을 해준다
 
-![](https://cdn-images-1.medium.com/max/3264/1*OXPz9LP3ngV2dqKe_CGe1A.png)
+```dart
+//프로젝트별 GOOGLE 시트 번역 문서 ID
+//문서는 "링크를 가진사람은 모두 엑세스"될 수있도록 "공유" 돼 있어야 한다.
+final projectMap = {
+  'astc': '1bnsfTv6ORtWLUEvkgmnvey6qNi_pGdpFapTQQd5UZss',
+  'any-other-project': '1bnsfTvany-other-projectTQQd5UZss'
+};
 
-You can then use these translations in your own project with something like this.
+//번역 생성할 프로젝트 폴더명
+final PROJECT_ID = 'astc';
+//프로젝트별 localization.g.dart 파일 위치
+String updateProjectLocalPath = 'C:\\Sync\\Works\\$PROJECT_ID\\lib\\helpers';
+//번역프로그램 lib 위치
+String thisLocalPath = 'C:\\Sync\\Works\\gs_translation\\lib';
+```
 
-    Text('settings.updateProfile'.tr)
 
-You can find out more about how to use getX translations [here](https://pub.dev/packages/get#internationalization).
+마지막으로 번역프로그램 루트 폴더에서 아래와 같이 커맨드롤 수행합니다.
+```
+dart lib/main.dart
+```
 
-Anyway I hope you will find this useful for your own projects. If you would like to see how I used this in a project you can take a look at my [getX flutter starter project](https://jeffmcmorris.medium.com/getx-flutter-firebase-auth-example-b383c1dd1de2)
+이렇게 하면 localization.g.dart 파일(`updateProjectLocalPath`, `thisLocalPath`)에 아래와 같이 변환된 코드가 생성됩니다.
+```dart
+import 'package:get/get.dart';
 
+class Localization extends Translations {
+  @override
+  Map<String, Map<String, String>> get keys => {
+    'ko': {
+'About': 'About',
+'Astronomical calendar': '천문달력',
+'Input text here': '텍스트를 입력하세요',
+'Copy': '복사',
+'Clear': '삭제',
+'Cancel': '취소',
+'Confirm': '확인',
+'Select': '선택',
+'app description': '천문현상을 볼 수 있는 달력입니다',
+'Share App': '앱공유',
+'😊Have a nice day🎉 - EnooSoft': '😊좋은 하루 보내세요🎉 - EnooSoft',
+},
+'en': {
+'About': 'About',
+'Astronomical calendar': 'Astronomical calendar',
+'Input text here': 'Input text here',
+'Copy': 'Copy',
+'Clear': 'Clear',
+```
+
+그리고 `GetX` 프로젝트에서 아래 방법으로 번역을 사용하면 됩니다.
+
+```dart
+Text('settings.updateProfile'.tr)
+```
+
+`GetX internationalization`에 대해서는 [여기](https://pub.dev/packages/get#internationalization)에 자세한 내용이 있습니다.
+
+
+이 프로그램은 아래 블로그를 보고 번역/개선하여 만든 프로그램입니다.  
+
+### 원저자 및 출처  
+[Jeff McMorris](https://jeffmcmorris.medium.com/)  
+[GetX Google Sheets Translation Code Generator](https://jeffmcmorris.medium.com/getx-google-sheets-translation-code-generator-b970543d67fc)  
+[Github](https://github.com/delay/getx_google_sheets_translation_code_generator)
