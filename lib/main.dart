@@ -11,19 +11,23 @@ void main() {
 //프로젝트별 GOOGLE 시트 번역 문서 ID
 //문서는 "링크를 가진사람은 모두 엑세스"될 수있도록 "공유" 돼 있어야 한다.
 final projectMap = {
-  'astc': '1bnsfTv6ORtWLUEvkgmnvey6qNi_pGdpFapTQQd5UZss',
-  'any-other-project': '1bnsfTvany-other-projectTQQd5UZss'
+  "post": "1aMM-Q__xaMFOO5h1AnTUEOHxo1TKfCJMwmhHTxLBJM0",
+  "rplc": "16034CeZ7qLUt72SSOpd2gkZI2N4zKy8X8KU-AnLCXzA",
+  'astc': '1vjtl5eg7e0cLUZHKjBN7XbXIhT_12PQdUCQzbfojc7I',
+  'godutch': '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw',
 };
 
 //번역 생성할 프로젝트 폴더명
-final PROJECT_ID = 'astc';
-//프로젝트별 localization.g.dart 파일 위치
-String updateProjectLocalPath = 'C:\\Sync\\Works\\$PROJECT_ID\\lib\\helpers';
-//번역프로그램 lib 위치
-String thisLocalPath = 'C:\\Sync\\Works\\gs_translation\\lib';
+final projectId = 'godutch';
+//프로젝트  .g.dart 파일 위치
+//String updateProjectLocalPath = '~/Sync/Works/$projectId/lib/intl';
+//String thisLocalPath = '~/Sync/Works/gs_translation/lib'; //번역프로그램 lib 위치
+
+String updateProjectLocalPath = 'C:/Sync/Works/$projectId/lib/generated/intl';
+String thisLocalPath = 'C:/Sync/Works/gs_translation/lib'; //번역프로그램 lib 위치
 
 Future updateLocalizationFile() async {
-  String? documentId = projectMap[PROJECT_ID];
+  String? documentId = projectMap[projectId];
   //the sheetid of your google sheet
   String sheetId = "0";
 
@@ -117,8 +121,9 @@ class Localization extends Translations {
       _localizationFile = _localizationFile + _currentLanguageTextCode;
       _localization.phrases.forEach((_phrase) {
         String _phraseKey = _phrase.key;
-        String _phrasePhrase = _phrase.phrase.replaceAll(r"'", "\\\'");
-        String _currentPhraseTextCode = "'$_phraseKey': '$_phrasePhrase',\n";
+        String _phrasePhrase = _phrase.phrase.replaceAll(r"'", "\\'");
+        String _currentPhraseTextCode =
+            "\t\t'$_phraseKey': '$_phrasePhrase',\n";
         _localizationFile = _localizationFile + _currentPhraseTextCode;
       });
       String _currentLanguageCodeEnding = "},\n";
@@ -132,17 +137,18 @@ class Localization extends Translations {
 
     stdout.writeln('');
     stdout.writeln('---------------------------------------');
-    stdout.writeln('Saving localization.g.dart');
+    stdout.writeln('Saving intl.g.dart');
     stdout.writeln('---------------------------------------');
-    final thisFile = File('$thisLocalPath\\localization.g.dart');
-    final projectFile = File('$updateProjectLocalPath\\localization.g.dart');
-    await thisFile.writeAsString(_localizationFile);
-    stdout.writeln('Saving localization.g.dart to ${thisFile.absolute}');
-    await projectFile.writeAsString(_localizationFile);
-    stdout.writeln('Saving localization.g.dart to ${projectFile.absolute}');
+    final thisFile = File('$thisLocalPath/intl.g.dart');
+    final projectFile = File('$updateProjectLocalPath/intl.g.dart');
+    thisFile.writeAsStringSync(_localizationFile);
+    stdout.writeln('Saving intl.g.dart to ${thisFile.absolute}');
+    projectFile.writeAsStringSync(_localizationFile);
+    stdout.writeln('Saving intl.g.dart to ${projectFile.absolute}');
     stdout.writeln('Done...');
   } catch (e) {
     //output error
+    stderr.writeln(_localizationFile);
     stderr.writeln('error: networking error');
     stderr.writeln(e.toString());
   }
