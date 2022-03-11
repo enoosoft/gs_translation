@@ -15,39 +15,22 @@ git clone "https://github.com/enoosoft/gs_translation.git"
 
 그리고 아래와 같이 구글 번역 시트 문서를 만듭니다.
 
-![](./doc/images/gstr_sample.png)
+![samle](./doc/images/gstr_sample.png)
 
-[샘플시트](https://docs.google.com/spreadsheets/d/1bnsfTv6ORtWLUEvkgmnvey6qNi_pGdpFapTQQd5UZss/edit#gid=0) 를 복사하여 만들면 됩니다. Google 시트를 사용하면 간단한 수식으로 필드를 번역할 수 있습니다. `=GOOGLETRANSLATE(B4,en,ko)` 필드 `B4`의 문구를 영어(`en`)에서 한국어(`ko`)로 번역할 수 있습니다. 
+[샘플시트](https://docs.google.com/spreadsheets/d/1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw/edit#gid=0) 를 복사하여 만들면 됩니다. Google 시트를 사용하면 간단한 수식으로 필드를 번역할 수 있습니다. `=GOOGLETRANSLATE(B4,en,ko)` 필드 `B4`의 문구를 영어(`en`)에서 스페인어(`es`) 등으로 번역할 수 있습니다. 구글시트에서 `key`, `en`, `ko` 열이 필수 입니다. 구글 번역 api는 영어에서 다른 언어로 번역하는 것이 더 자연스럽기 때문에 번거롭지만 `en` 을 직접 입력하도록 했습니다.
 
-그런 다음 구글시트 ID와 프로젝트 폴더명을 `main.dart` 파일의 `projectMap` 등을 아래와 같이 수정을 해줍니다
+그런 다음 번역프로그램 루트 폴더에서 구글시트 ID `--doc`와 프로젝트 폴더명 `--path`, 파일명 `--file` 을 넣고 `main.dart` 를 아래와 같이 실행합니다.
 
-```dart
-//프로젝트별 GOOGLE 시트 번역 문서 ID
-//문서는 "링크를 가진사람은 모두 엑세스"될 수있도록 "공유" 돼 있어야 한다.
-final projectMap = {
-  'astc': '1bnsfTv6ORtWLUEvkgmnvey6qNi_pGdpFapTQQd5UZss',
-  'any-other-project': '1bnsfTvany-other-projectTQQd5UZss'
-};
+```sh
+dart bin/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~/Sync/Works/godutch/lib/home/intl --file messages.dart
 
-//번역 생성할 프로젝트 폴더명
-final PROJECT_ID = 'astc';
-//프로젝트별 localization.g.dart 파일 위치
-String updateProjectLocalPath = 'C:\\Sync\\Works\\$PROJECT_ID\\lib\\helpers';
-//번역프로그램 lib 위치
-String thisLocalPath = 'C:\\Sync\\Works\\gs_translation\\lib';
 ```
 
-
-마지막으로 번역프로그램 루트 폴더에서 아래와 같이 커맨드를 수행합니다.
-```
-dart lib/main.dart
-```
-
-이렇게 하면 localization.g.dart 파일(`updateProjectLocalPath`, `thisLocalPath`)에 아래와 같이 변환된 코드가 생성됩니다.
+이렇게 하면 messages.dart 파일에 아래와 같이 변환된 코드가 생성됩니다.
 ```dart
 import 'package:get/get.dart';
 
-class Localization extends Translations {
+class Messages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
     'ko': {
@@ -77,7 +60,7 @@ class Localization extends Translations {
 Text('Input text here'.tr)
 ```
 
-`GetX internationalization`에 대해서는 [여기](https://pub.dev/packages/get#internationalization)에 자세한 내용이 있습니다.
+`GetX localization`에 대해서는 [여기](https://pub.dev/packages/get#internationalization)에 자세한 내용이 있습니다.
 
 
 이 프로그램은 아래 블로그를 참조하여 개선하여 만든 프로그램입니다.  
