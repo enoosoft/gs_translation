@@ -36,25 +36,22 @@ import 'package:get/get.dart';
 class Messages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
-    'ko': {
-'About': 'About',
-'Astronomical calendar': '천문달력',
-'Input text here': '텍스트를 입력하세요',
-'Copy': '복사',
-'Clear': '삭제',
-'Cancel': '취소',
-'Confirm': '확인',
-'Select': '선택',
-'app description': '천문현상을 볼 수 있는 달력입니다',
-'Share App': '앱공유',
-'😊Have a nice day🎉 - EnooSoft': '😊좋은 하루 보내세요🎉 - EnooSoft',
-},
-'en': {
-'About': 'About',
-'Astronomical calendar': 'Astronomical calendar',
-'Input text here': 'Input text here',
-'Copy': 'Copy',
-'Clear': 'Clear',
+        'ko': {
+          'appName': 'A형총무의더치페이',
+          'yes': '예',
+          'no': '아니오',
+          'test': 'test',
+          'group': '모임',
+          'groupName': '모임이름',
+          'editGroup': '모임수정',
+          'addGroup': '모임추가',
+          'removeGroup': '모임삭제',
+          'hasGroupName': '같은 모임 이름이 이미 있습니다',
+          'thisIsTheLastGroup': '마지막 모임 입니다',
+          'inputGroupName': '모임 이름을 입력해주세요',
+          'Share App': '앱공유',
+          '😊Have a nice day🎉 - EnooSoft': '😊좋은 하루 보내세요🎉 - EnooSoft',
+          . . .
 ```
 
 그리고 `GetX` 프로젝트에서 아래 방법으로 번역을 사용하면 됩니다.
