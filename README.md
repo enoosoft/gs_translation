@@ -17,7 +17,10 @@ git clone "https://github.com/enoosoft/gs_translation.git"
 
 ![samle](./doc/images/gstr_sample.png)
 
-[샘플시트](https://docs.google.com/spreadsheets/d/1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw/edit#gid=0) 를 복사하여 만들면 됩니다. Google 시트를 사용하면 간단한 수식으로 필드를 번역할 수 있습니다. `=GOOGLETRANSLATE(B4,en,ko)` 필드 `B4`의 문구를 영어(`en`)에서 스페인어(`es`) 등으로 번역할 수 있습니다. 구글시트에서 `key`, `en`, `ko` 열이 필수 입니다. 구글 번역 api는 영어에서 다른 언어로 번역하는 것이 더 자연스럽기 때문에 번거롭지만 `en` 을 직접 입력하도록 했습니다.
+- [샘플시트](https://docs.google.com/spreadsheets/d/1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw/edit#gid=0) 를 복사하여 만들면 됩니다. **문서는 "링크를 가진사람은 모두 엑세스"될 수 있도록 "공유" 돼 있어야 합니다**.
+
+- Google 시트를 사용하면 간단한 수식으로 필드를 번역할 수 있습니다. `=GOOGLETRANSLATE(B4,en,ko)` 필드 `B4`의 문구를 영어(`en`)에서 스페인어(`es`) 등으로 번역할 수 있습니다. 
+- 구글시트에서 `key`, `en`, `ko` 열이 필수 입니다. 구글 번역 api는 영어에서 다른 언어로 번역하는 것이 더 자연스럽기 때문에 번거롭지만 `en` 을 직접 입력하도록 했습니다.
 
 그런 다음 번역프로그램 루트 폴더에서 구글시트 ID `--doc`와 프로젝트 폴더명 `--path`, 파일명 `--file` 을 넣고 `main.dart` 를 아래와 같이 실행합니다.
 
@@ -26,7 +29,7 @@ dart bin/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~
 
 ```
 
-이렇게 하면 messages.dart 파일에 아래와 같이 변환된 코드가 생성됩니다.
+이렇게 하면 `messages.dart` 파일에 아래와 같이 변환된 코드가 생성됩니다.
 ```dart
 import 'package:get/get.dart';
 
