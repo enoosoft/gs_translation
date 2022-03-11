@@ -8,8 +8,8 @@ import 'package:csv/csv.dart';
 //프로젝트별 GOOGLE 시트 번역 문서 ID
 //문서는 "링크를 가진사람은 모두 엑세스"될 수있도록 "공유" 돼 있어야 한다.
 
-//dart lib/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~/Sync/Works/godutch/lib/generated/intl --file intl.g.dart
-//dart lib/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~/Sync/Works/godutch/lib/home/intl --file intl.g.dart
+//dart bin/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~/Sync/Works/godutch/lib/generated/intl --file intl.g.dart
+//dart bin/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~/Sync/Works/godutch/lib/home/intl --file intl.g.dart
 Future<void> main(List<String> arguments) async {
   exitCode = 0; // presume success
   var parser = ArgParser();
@@ -32,8 +32,8 @@ Future updateLocalizationFile(ArgResults args) async {
   String sheetId = "0";
 
   String _phraseKey = '';
-  List<LocalizationModel> _localizations = [];
-  String _localizationFile = """import 'package:get/get.dart';
+  List<LocalizationModel> _words = [];
+  String _content = """import 'package:get/get.dart';
 
 class Localization extends Translations {
   @override
@@ -100,14 +100,14 @@ class Localization extends Translations {
           _phraseKey = value;
         } else {
           bool _languageAdded = false;
-          _localizations.forEach((element) {
+          _words.forEach((element) {
             if (element.language == key) {
               element.phrases.add(PhraseModel(key: _phraseKey, phrase: value));
               _languageAdded = true;
             }
           });
           if (_languageAdded == false) {
-            _localizations.add(LocalizationModel(
+            _words.add(LocalizationModel(
                 language: key,
                 phrases: [PhraseModel(key: _phraseKey, phrase: value)]));
           }
@@ -115,25 +115,24 @@ class Localization extends Translations {
       });
     }
 
-    _localizations.forEach((_localization) {
-      String _language = _localization.language;
-      String _currentLanguageTextCode = "'$_language': {\n";
-      _localizationFile = _localizationFile + _currentLanguageTextCode;
-      _localization.phrases.forEach((_phrase) {
-        String _phraseKey = _phrase.key;
+    _words.forEach((_word) {
+      String _lang = _word.language;
+      String _currLang = "'$_lang': {\n";
+      _content = _content + _currLang;
+      _word.phrases.forEach((_phrase) {
+        String _key = _phrase.key;
         String _phrasePhrase = _phrase.phrase.replaceAll(r"'", "\\'");
-        String _currentPhraseTextCode =
-            "\t\t'$_phraseKey': '$_phrasePhrase',\n";
-        _localizationFile = _localizationFile + _currentPhraseTextCode;
+        String _currentPhraseTextCode = "\t\t'$_key': '$_phrasePhrase',\n";
+        _content = _content + _currentPhraseTextCode;
       });
       String _currentLanguageCodeEnding = "},\n";
-      _localizationFile = _localizationFile + _currentLanguageCodeEnding;
+      _content = _content + _currentLanguageCodeEnding;
     });
     String _fileEnding = """
         };
       }
       """;
-    _localizationFile = _localizationFile + _fileEnding;
+    _content = _content + _fileEnding;
 
     stdout.writeln('');
     stdout.writeln('---------------------------------------');
@@ -141,14 +140,14 @@ class Localization extends Translations {
     stdout.writeln('---------------------------------------');
     final thisFile = File('$thisLocalPath/${args["file"]}');
     final projectFile = File('$updateProjectLocalPath/${args["file"]}');
-    thisFile.writeAsStringSync(_localizationFile);
+    thisFile.writeAsStringSync(_content);
     stdout.writeln('Saving ${args["file"]} to ${thisFile.absolute}');
-    projectFile.writeAsStringSync(_localizationFile);
+    projectFile.writeAsStringSync(_content);
     stdout.writeln('Saving ${args["file"]} to ${projectFile.absolute}');
     stdout.writeln('Done...');
   } catch (e) {
     //output error
-    stderr.writeln(_localizationFile);
+    stderr.writeln(_content);
     stderr.writeln('error: networking error');
     stderr.writeln(e.toString());
   }
