@@ -9,7 +9,7 @@ import 'package:csv/csv.dart';
 //문서는 "링크를 가진사람은 모두 엑세스"될 수있도록 "공유" 돼 있어야 한다.
 
 //dart bin/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~/Sync/Works/godutch/lib/generated/intl --file intl.g.dart
-//dart bin/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~/Sync/Works/godutch/lib/home/intl --file intl.g.dart
+//dart bin/main.dart --doc '1VsYZH_y7bPZr8gE7rg-9PHnrOCKVKwBO7JjBpdOiEjw' --path ~/Sync/Works/godutch/lib/home/intl --file messages.dart
 Future<void> main(List<String> arguments) async {
   exitCode = 0; // presume success
   var parser = ArgParser();
@@ -35,7 +35,7 @@ Future updateLocalizationFile(ArgResults args) async {
   List<LocalizationModel> _words = [];
   String _content = """import 'package:get/get.dart';
 
-class Localization extends Translations {
+class Messages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
     """;
@@ -100,16 +100,20 @@ class Localization extends Translations {
           _phraseKey = value;
         } else {
           bool _languageAdded = false;
-          _words.forEach((element) {
-            if (element.language == key) {
-              element.phrases.add(PhraseModel(key: _phraseKey, phrase: value));
-              _languageAdded = true;
+          if (_phraseKey.isNotEmpty) {
+            _words.forEach((element) {
+              if (element.language == key) {
+                element.phrases
+                    .add(PhraseModel(key: _phraseKey, phrase: value));
+                _languageAdded = true;
+              }
+            });
+
+            if (_languageAdded == false) {
+              _words.add(LocalizationModel(
+                  language: key,
+                  phrases: [PhraseModel(key: _phraseKey, phrase: value)]));
             }
-          });
-          if (_languageAdded == false) {
-            _words.add(LocalizationModel(
-                language: key,
-                phrases: [PhraseModel(key: _phraseKey, phrase: value)]));
           }
         }
       });

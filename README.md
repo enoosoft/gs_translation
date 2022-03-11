@@ -83,6 +83,7 @@ Text('Input text here'.tr)
 이 프로그램은 아래 블로그를 참조하여 개선하여 만든 프로그램입니다.  
 
 ### 원저자 및 출처  
+
 [Jeff McMorris](https://jeffmcmorris.medium.com/)  
 [GetX Google Sheets Translation Code Generator](https://jeffmcmorris.medium.com/getx-google-sheets-translation-code-generator-b970543d67fc)  
 [Github](https://github.com/delay/getx_google_sheets_translation_code_generator)
